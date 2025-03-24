@@ -18,17 +18,17 @@ Steps
 
 3. Access the services:
    - RabbitMQ Management: http://localhost:15672
-     Username: guest
-     Password: guest
+   - Username: guest
+   - Password: guest
 
 Services Details
 
 - Producer Service :
-- Endpoint: GET /send-message
-- Port: 3000
+  - Endpoint: GET /send-message
+  - Port: 3000
 
-- Consumer Service :
-- Port: 3001
+  - Consumer Service :
+  - Port: 3001
 
 Useful Commands
 - docker-compose up -d --build   Start all services
