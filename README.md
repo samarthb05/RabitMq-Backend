@@ -1,20 +1,50 @@
-You need docker for rabitmq to make image of rabitmq in the docker.
+RabbitMQ Message Queue Demo with Docker
 
-1.First install docker in the your pc as per you configuarion i will suggest to install arm64.Follow installation steps mentioned in the procees.
-2.Allow all the permission that docker need , enable virtulization from BIOS mode if you are using docker for wsl method .
-3.WSL is used for run ubantu in the windows you have to install wsl in you machine by using wsl commands form cmd.
-4.After successful completion of the same you can run below docker command
+This project demonstrates a basic RabbitMQ implementation with:
+- A producer service that sends messages
+- A consumer service that receives messages
+- RabbitMQ server with management UI
 
-"docker run -d --hostname rmq --name rabbit-server -p 5000:15672 -p 5672:5672 rabbitmq:management"
+Prerequisites
+- Docker installed
+- Docker Compose
+- For Windows: WSL2 enabled 
 
-command explain :
-docker run :this will create container in the docker
--d: detached mode
---hostname rmq :hostname of the container 
---name rabbit-server:this is the server name
--p 3000:15672:here 3000 is your local poer on which you can go for rabiitmq and 15672 is your rabitmq port 
--p 5672:5672:it is default port of the rabitmq
-rabbitmq:management:version of the rabitmq
+Steps
+1. Clone the repository
+2. Install depedency: npm install
+2. Run the following command:
+   docker-compose up -d --build // to run docker image
 
-default rabitmq user and passowrd is : guest 
-you cancheck dashbord at on your local port i.e 8080 or 5000
+3. Access the services:
+   - RabbitMQ Management: http://localhost:15672
+     Username: guest
+     Password: guest
+
+Services Details
+
+- Producer Service :
+- Endpoint: GET /send-message
+- Port: 3000
+
+- Consumer Service :
+- Port: 3001
+
+Useful Commands
+- docker-compose up -d --build   Start all services
+- docker-compose logs -f         View service logs
+- docker-compose down            Stop services
+- docker-compose down -v         Stop and remove volumes
+
+Troubleshooting 
+
+1. CONNECTION ISSUES:
+   - Wait 30 seconds after startup for RabbitMQ to initialize
+   - Check logs with docker-compose logs rabbitmq
+
+2. PORT CONFLICTS:
+   - Modify ports in docker-compose.yml if default ports are occupied
+
+3. WINDOWS WSL ISSUES:
+   - Ensure virtualization is enabled in BIOS
+   - Update WSL with wsl --update

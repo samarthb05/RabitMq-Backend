@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq-server
+    hostname: rmq
+    ports:
+      - "15672:15672" 
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  producer:
+    build: ./producer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+  consumer:
+    build: ./consumer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+
+volumes:
+  rabbitmq_data:
